@@ -1,0 +1,313 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Define Article %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Using Packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{empheq}
+\usepackage{mdframed}
+\usepackage{booktabs}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{psfrag}
+\usepackage{pgfplots}
+\usepackage{bm}
+\usepackage{hyperref}
+\usepackage{csvsimple}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{subcaption}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Other Settings
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% Page Setting %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\geometry{a4paper}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% Define some useful colors %%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{ocre}{RGB}{243,102,25}
+\definecolor{mygray}{RGB}{243,243,244}
+\definecolor{deepGreen}{RGB}{26,111,0}
+\definecolor{shallowGreen}{RGB}{235,255,255}
+\definecolor{deepBlue}{RGB}{61,124,222}
+\definecolor{shallowBlue}{RGB}{235,249,255}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% Define an orange box command %%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\orangebox[1]{\fcolorbox{ocre}{mygray}{\hspace{1em}#1\hspace{1em}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% English Environments %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newtheoremstyle{mytheoremstyle}{3pt}{3pt}{\normalfont}{0cm}{\rmfamily\bfseries}{}{1em}{{\color{black}\thmname{#1}~\thmnumber{#2}}\thmnote{\,--\,#3}}
+\newtheoremstyle{myproblemstyle}{3pt}{3pt}{\normalfont}{0cm}{\rmfamily\bfseries}{}{1em}{{\color{black}\thmname{#1}~\thmnumber{#2}}\thmnote{\,--\,#3}}
+\theoremstyle{mytheoremstyle}
+\newmdtheoremenv[linewidth=1pt,backgroundcolor=shallowGreen,linecolor=deepGreen,leftmargin=0pt,innerleftmargin=20pt,innerrightmargin=20pt,]{theorem}{Theorem}[section]
+\theoremstyle{mytheoremstyle}
+\newmdtheoremenv[linewidth=1pt,backgroundcolor=shallowBlue,linecolor=deepBlue,leftmargin=0pt,innerleftmargin=20pt,innerrightmargin=20pt,]{definition}{Definition}[section]
+\theoremstyle{myproblemstyle}
+\newmdtheoremenv[linecolor=black,leftmargin=0pt,innerleftmargin=10pt,innerrightmargin=10pt,]{problem}{Problem}[section]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Plotting Settings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepgfplotslibrary{colorbrewer}
+\pgfplotsset{width=8cm,compat=1.9}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Title & Author %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Binary Classification of the Iranian churn dataset using learning models}
+\author{Leonel Guerrero  \\ Carnet: 18-10638}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\maketitle
+
+\section*{Description}
+
+In this document we will use the Iranian churn dataset to predict the churn of the customers. the dataset is available in the \href{https://archive-beta.ics.uci.edu/dataset/592/iranian+churn+dataset}{UCI Machine Learning Repository}.
+
+\subsection*{Information about the dataset}
+
+This dataset is randomly collected from an Iranian telecom company database over a period of 12 months. A total of 3150 rows of data, each representing a customer, bear information for 13 columns. The attributes that are in this dataset are call failures, frequency of SMS, number of complaints, number of distinct calls, subscription length, age group, the charge amount, type of service, seconds of use, status, frequency of use, and Customer Value.
+
+All of the attributes except for attribute churn is the aggregated data of the first 9 months. The churn labels are the state of the customers at the end of 12 months. The three months is the designated planning gap.
+
+\subsection*{Attribute Information}
+\begin{itemize}
+  \item Anonymous Customer ID
+  \item Call Failures: number of call failures
+  \item Complains: binary (0: No complaint, 1: complaint)
+  \item Subscription Length: total months of subscription
+  \item Charge Amount: Ordinal attribute (0: lowest amount, 9: highest  - amount)
+  \item Seconds of Use: total seconds of calls
+  \item Frequency of use: total number of calls
+  \item Frequency of SMS: total number of text messages
+  \item Distinct Called Numbers: total number of distinct phone calls
+  \item Age Group: ordinal attribute (1: younger age, 5: older age)
+  \item Tariff Plan: binary (1: Pay as you go, 2: contractual)
+  \item Status: binary (1: active, 2: non-active)
+  \item Churn: binary (1: churn, 0: non-churn) - Class label
+  \item Customer Value: The calculated value of customer
+\end{itemize}
+
+\section*{Data Analysis}
+
+\subsection*{Show the raw data}
+First, we will analyze the dataset and then we will use different learning models to predict the churn of the customers. Let's start by showing the first and last 5 rows of the dataset.
+
+% First and last 5 rows of the dataset
+% the file is in the csv folder with name first_last_five.csv
+\begin{table}[h]
+  \centering
+  \csvautotabular{csv/first_five.csv}
+  \caption{First 5 rows of the dataset}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \csvautotabular{csv/last_five.csv}
+  \caption{Last 5 rows of the dataset}
+\end{table}
+
+Now we will show the summary of the dataset.
+
+\newpage
+
+% Summary of the dataset
+% the file is in the csv folder with name description.csv
+\begin{table}[h]
+  \centering
+  \csvautotabular{csv/description.csv}
+  \caption{Summary of the dataset}
+\end{table}
+
+\subsection*{Data Visualization}
+
+Now we will show in the figure \ref{fig:output} the histograms of each attribute to see the distribution of the data, and to see if there are any outliers.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=1\textwidth]{images/output.png}
+  \caption{Histogram of the attributes}
+  \label{fig:output}
+\end{figure}
+
+\subsection*{Analysis of the dataset}
+
+Through the analysis of the data and the graphs it can be appreciated that, in the binary characteristics there are many more data in one of the characteristics in the other, a fact that could affect the learning models, on the other hand it can also be appreciated that the distribution of the data, with the exception of the age group does not have a normal distribution, and moreover, most of them tend to group the data in the initial values tending to an inverse distribution, with the exception of the subscription length.
+
+\section*{Feature scaling}
+
+Due to the analysis performed on the data and the fact that some learning algorithms that will be used use the gradient descent, which is sensitive to the scale of the data, the decision was made to perform a scaling of the data to improve the convergence processes of the learning algorithms, a normalization, a standardization and the combination of the two will be performed to train each of the models and compare the results obtained and get the best model that manages to classify the data.
+
+\section*{Splitting the dataset}
+
+Apart from the scaling of the data, the data set will be separated in a proportion of 80\% and 20\% where the same 80\% of the data will be used to train each of the learning machines and the effectiveness of each of the machines will be verified with the remaining 20\% of the data.
+
+\section*{Learning models}
+
+The learning machines that will be used to try to classify the data will be the following:
+
+\begin{itemize}
+  \item Perceptron: to know and test if the data are linearly separable.
+
+  \item MLP: In case the data are not linearly separable, look for a more complex separation rule by the use of the gradient descent algorithm, in the same way this learning machine will be used due to its versatility for the separability of more complex regions.
+
+  \item SVM: This machine will be used to classify the data taking a different approach to the previous learning machine in order to compare different algorithms and see which one classifies the data better.
+\end{itemize}
+
+\subsection*{Perceptron}
+
+The first learning machine that will be used is the perceptron, this machine is a linear classifier, which means that it will try to find a linear separation rule between the data. After training the machine, the results obtained are shown in the table \ref{tab:perceptron}.
+
+\begin{longtable}{c|cc|cc|}
+  \cline{2-5}
+                                                                                               & \multicolumn{2}{c|}{Train} & \multicolumn{2}{c|}{Test}                   \\
+  \endfirsthead
+  %
+  \endhead
+  %
+                                                                                               & Score                      & Errors                    & Score  & Errors \\ \hline
+  \multicolumn{1}{|c|}{Original}                                                               & 0.8476                     & 384                       & 0.8429 & 99     \\ \hline
+  \multicolumn{1}{|c|}{Standardized}                                                           & 0.8159                     & 464                       & 0.8175 & 115    \\ \hline
+  \multicolumn{1}{|c|}{Normalized}                                                             & 0.854                      & 368                       & 0.8429 & 99     \\ \hline
+  \multicolumn{1}{|c|}{\begin{tabular}[c]{@{}c@{}}Standardized \\ and Normalized\end{tabular}} & 0.8671                     & 335                       & 0.8571 & 90     \\ \hline
+\end{longtable}
+
+Through the table we can see that the machine was able to classify the data with an accuracy between 81.59\% and 86.71\%, in the training phase and between 81.75\% and 85.71\% in the test phase, the best results were obtained with the combination of the normalization and standardization of the data, with the highest accuracy in the test phase, and the lowest number of errors.
+
+\subsection*{MLP}
+
+The second learning machine that will be used is the MLP, this machine is a non-linear classifier, which means that it will try to find a non-linear separation rule between the data. After training the machine, the results obtained are shown in the table \ref{tab:mlp}.
+
+\subsubsection*{Tuning the parameters of the MLP}
+
+The MLP is a learning machine that has a large number of parameters that can be tuned to improve the performance of the machine, in this case the parameters that will be tuned are the following:
+
+\begin{itemize}
+  \item Number of neurons in the hidden layer: The number of neurons that will be used will be 3, 5 and 7
+  \item Activation function: The activation functions that will be used will be the sigmoid, the tanh and the relu.
+\end{itemize}
+
+\subsubsection*{Results of the MLP}
+
+Due to the large number of combinations that can be made with the parameters of the MLP, we will only show the results of the best combinations of the parameters, specifically the best 10 combinations of the parameters, after training the machine, the results obtained are shown in the table \ref{tab:mlp} in the order of the best results to the worst.
+
+\begin{longtable}{ccccccc}
+  \centering
+                              &                                & \textbf{}                                                                      & \multicolumn{2}{c}{\textbf{Train}} & \multicolumn{2}{c}{\textbf{Test}}                                    \\ \cline{4-7}
+  \endfirsthead
+  %
+  \endhead
+  %
+                              &                                & \textbf{}                                                                      & \textbf{Score}                     & \textbf{Errors}                   & \textbf{Score} & \textbf{Errors} \\ \cline{4-7}
+  \textbf{Hidden Layer Sizes} & \textbf{Activation}            & \textbf{Dataset Type}                                                          &                                    &                                   &                &                 \\ \hline
+  \textbf{7}                  & \textbf{relu}                  & \textbf{\begin{tabular}[c]{@{}c@{}}Standardized and\\ Normalized\end{tabular}} & 0.902                              & 247                               & 0.8889         & 70              \\ \hline
+  \textbf{5}                  & \textbf{relu}                  & \textbf{\begin{tabular}[c]{@{}c@{}}Standardized and\\ Normalized\end{tabular}} & 0.902                              & 247                               & 0.8889         & 70              \\ \hline
+  \multirow{3}{*}{\textbf{7}} & \textbf{relu}                  & \textbf{Standardized}                                                          & 0.9036                             & 243                               & 0.8889         & 70              \\
+                              & \textbf{logistic}              & \textbf{Standardized}                                                          & 0.9                                & 252                               & 0.8889         & 70              \\
+                              & \textbf{tanh}                  & \textbf{\begin{tabular}[c]{@{}c@{}}Standardized and\\ Normalized\end{tabular}} & 0.902                              & 247                               & 0.8889         & 70              \\ \hline
+  \multirow{2}{*}{\textbf{5}} & \textbf{logistic}              & \textbf{Standardized}                                                          & 0.9004                             & 251                               & 0.8889         & 70              \\
+                              & \textbf{relu}                  & \textbf{Standardized}                                                          & 0.9008                             & 250                               & 0.8857         & 72              \\ \hline
+  \multirow{3}{*}{\textbf{3}} & \multirow{2}{*}{\textbf{tanh}} & \textbf{\begin{tabular}[c]{@{}c@{}}Standardized and\\ Normalized\end{tabular}} & 0.898                              & 257                               & 0.8857         & 72              \\
+                              &                                & \textbf{Standardized}                                                          & 0.9008                             & 250                               & 0.8841         & 73              \\
+                              & \textbf{relu}                  & \textbf{\begin{tabular}[c]{@{}c@{}}Standardized and\\ Normalized\end{tabular}} & 0.8917                             & 273                               & 0.8825         & 74              \\ \hline
+  \caption{Results of the MLP}
+  \label{tab:mlp}
+\end{longtable}
+
+Through the table we can see that from the 10 best combinations of the parameters, 7 of them are the same, with the same accuracy in the test phase, and the same number of errors, with 88.89\% accuracy and 70 errors. Something worth mentioning is the fact that in the best machines neither the original dataset nor the normalized dataset is displayed, apart from the fact that the most repeated activation function is relu. Therefore, it can be seen that the combination of the normalization and standardization of the data, with the relu activation function, is a good combination of parameters for the MLP.
+
+\subsection*{SVM}
+
+The third learning machine that will be used is the SVM, this machine is a non-linear classifier, which means that it will try to find a non-linear separation rule between the data. After training the machine, the results obtained are shown in the table \ref{tab:svm}.
+
+\subsubsection*{Tuning the parameters of the SVM}
+
+The SVM is a learning machine that has a large number of parameters that can be tuned to improve the performance of the machine, in this case the parameters that will be tuned are the following:
+
+\begin{itemize}
+  \item Kernel: The kernels that will be used will be the linear, the polynomial and the rbf.
+  \item C: The C value represents the penalty of the error term (regularization), the values that will be used will be 0.1, 1 and 10.
+  \item Gamma/degree: The gamma value represents the influence of a single training example, the values that will be used will be the calculate by the library, that are 'scale' (1 / (n\_features * X.var())) and 'auto' (1 / n\_features). In the case of the polynomial kernel, the max degree used by the polynomial, the values that will be used will be 2, 3 and 4.
+\end{itemize}
+
+\subsubsection*{Results of the SVM}
+
+Due to the large number of combinations that can be made with the parameters of the SVM, we will only show the results of the best combinations of the parameters, specifically the best 10 combinations of the parameters, after training the machine, the results obtained are shown in the table \ref{tab:svm} in the order of the best results to the worst.
+
+\begin{longtable}{ccccllll}
+  \multicolumn{1}{l}{\textbf{}}        & \multicolumn{1}{l}{}         & \multicolumn{1}{l}{\textbf{}} & \textbf{}                                                                      & \multicolumn{2}{c}{\textbf{Train}} & \multicolumn{2}{c}{\textbf{Test}}                                                                              \\ \cline{5-6}
+  \endfirsthead
+  %
+  \endhead
+  %
+  \multicolumn{1}{l}{}                 & \multicolumn{1}{l}{}         & \multicolumn{1}{l}{\textbf{}} & \textbf{}                                                                      & \multicolumn{1}{c}{\textbf{Score}} & \multicolumn{1}{c}{\textbf{Errors}} & \multicolumn{1}{c}{\textbf{Score}} & \multicolumn{1}{c}{\textbf{Errors}} \\ \cline{5-8}
+  \textbf{Kernel}                      & \textbf{C}                   & \textbf{Gamma/Degree}         & \textbf{Dataset Type}                                                          &                                    &                                     &                                    &                                     \\ \hline
+  \textbf{Polynomial}                  & \textbf{10}                  & \textbf{4}                    & \textbf{\begin{tabular}[c]{@{}c@{}}Standardized and\\ Normalized\end{tabular}} & 0.9655                             & 87                                  & 0.9476                             & 33                                  \\ \hline
+  \textbf{RBF}                         & \textbf{10}                  & \textbf{scale}                & \textbf{\begin{tabular}[c]{@{}c@{}}Standardized and\\ Normalized\end{tabular}} & 0.9631                             & 93                                  & 0.9413                             & 37                                  \\ \hline
+  \textbf{Polynomial}                  & \textbf{10}                  & \textbf{3}                    & \textbf{\begin{tabular}[c]{@{}c@{}}Standardized and\\ Normalized\end{tabular}} & 0.9627                             & 94                                  & 0.9413                             & 37                                  \\ \hline
+  \multirow{2}{*}{\textbf{RBF}}        & \multirow{2}{*}{\textbf{10}} & \textbf{auto}                 & \textbf{Standardized}                                                          & 0.9579                             & 106                                 & 0.9381                             & 39                                  \\
+                                       &                              & \textbf{scale}                & \textbf{Standardized}                                                          & 0.9579                             & 106                                 & 0.9381                             & 39                                  \\ \hline
+  \multirow{5}{*}{\textbf{Polynomial}} & \multirow{3}{*}{\textbf{10}} & \textbf{4}                    & \textbf{Standardized}                                                          & 0.9512                             & 123                                 & 0.9349                             & 41                                  \\
+                                       &                              & \textbf{3}                    & \textbf{Standardized}                                                          & 0.9532                             & 118                                 & 0.9317                             & 43                                  \\
+                                       &                              & \textbf{2}                    & \textbf{\begin{tabular}[c]{@{}c@{}}Standardized and\\ Normalized\end{tabular}} & 0.9345                             & 165                                 & 0.9286                             & 45                                  \\ \cline{2-8}
+                                       & \multirow{2}{*}{\textbf{1}}  & \textbf{3}                    & \textbf{\begin{tabular}[c]{@{}c@{}}Standardized and\\ Normalized\end{tabular}} & 0.9377                             & 157                                 & 0.9238                             & 48                                  \\
+                                       &                              & \textbf{4}                    & \textbf{\begin{tabular}[c]{@{}c@{}}Standardized and\\ Normalized\end{tabular}} & 0.9417                             & 147                                 & 0.9238                             & 48                                  \\ \hline
+  \caption{Results of the SVM}
+  \label{tab:svm}
+\end{longtable}
+
+Through the table we can see that the best machines have similar results, with scores between 92.38\% and 94.76\%, also similar to MLP, in the best machines don't appear neither the original dataset nor the only normalized dataset. On the other hand it can be seen that in almost all of the best machines the best value of c was 10, where the best machine was the one with the polynomial kernel, $c = 10$, $\text{degree} = 4$ and a dataset that was standardized and normalized, with a score of 94.76\% in the test set and 96.55\% in the training set, and only 33 errors in the test set.
+
+\section*{Comparison of the three models}
+
+Now we will compare the best machine of each model. A comparison table of the three models can be seen in the table \ref{tab:comparacion}.
+
+\begin{longtable}{cccccc}
+                      & \multicolumn{2}{c}{\textbf{Train}} & \multicolumn{2}{c}{\textbf{Test}} & \begin{tabular}[c]{@{}c@{}}\textbf{Dataset}\\ \textbf{type}\end{tabular}                                                                                  \\ \cline{2-6}
+  \endfirsthead
+  %
+  \endhead
+  %
+  \hline
+  \endfoot
+  %
+  \endlastfoot
+  %
+                      & Score                              & Errors                            & Score                                                                    & Errors &                                                                       \\ \hline
+  \textbf{Perceptron} & 0.8671                             & 335                               & 0.8571                                                                   & 90     & \begin{tabular}[c]{@{}c@{}}Standardized\\ and Normalized\end{tabular} \\
+  \textbf{MLP}        & 0.9091                             & 229                               & 0.8968                                                                   & 65     & \begin{tabular}[c]{@{}c@{}}Standardized\\ and Normalized\end{tabular} \\
+  \textbf{SVM}        & 0.9655                             & 87                                & 0.9476                                                                   & 33     & \begin{tabular}[c]{@{}c@{}}Standardized\\ and Normalized\end{tabular} \\ \hline
+  \caption{Comparison of the three models}
+  \label{tab:comparacion}
+\end{longtable}
+
+\newpage
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{./images/output2.png}
+    \caption{Scores of the best machine of each model}
+    \label{fig:Scores of the best machine of each model}
+  \end{subfigure}
+  \begin{subfigure}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{./images/output3.png}
+    \caption{Errors of the best machine of each model}
+    \label{fig:Errors of the best machine of each model}
+  \end{subfigure}
+  \caption{Comparison of the three models}
+  \label{fig:Comparison of the three models}
+\end{figure}
+
+Through the table and the figures we can see that the best machine of each model has a scores higher that 85\% and a number of errors lower than 100, and the best machine is the SVM with a score of 94.76\% and only 33 errors.
+
+\end{document}

@@ -1,0 +1,39 @@
+,,,Train,Train,Test,Test
+,,,Score,Errors,Score,Errors
+Hidden Layer Sizes,Activation,Dataset Type,,,,
+3,logistic,Original,0.8468,386,0.827,109
+3,logistic,Standardized,0.9004,251,0.8857,72
+3,logistic,Normalized,0.8468,386,0.827,109
+3,logistic,Standardized and Normalized,0.8468,386,0.827,109
+3,tanh,Original,0.8468,386,0.827,109
+3,tanh,Standardized,0.8929,270,0.8746,79
+3,tanh,Normalized,0.8468,386,0.827,109
+3,tanh,Standardized and Normalized,0.9008,250,0.8841,73
+3,relu,Original,0.8448,391,0.8413,100
+3,relu,Standardized,0.9032,244,0.8921,68
+3,relu,Normalized,0.8468,386,0.827,109
+3,relu,Standardized and Normalized,0.8468,386,0.827,109
+5,logistic,Original,0.8468,386,0.827,109
+5,logistic,Standardized,0.8984,256,0.8841,73
+5,logistic,Normalized,0.8468,386,0.827,109
+5,logistic,Standardized and Normalized,0.8468,386,0.827,109
+5,tanh,Original,0.8476,384,0.8381,102
+5,tanh,Standardized,0.9048,240,0.8905,69
+5,tanh,Normalized,0.8468,386,0.827,109
+5,tanh,Standardized and Normalized,0.8944,266,0.8841,73
+5,relu,Original,0.8468,386,0.827,109
+5,relu,Standardized,0.9048,240,0.8905,69
+5,relu,Normalized,0.8468,386,0.827,109
+5,relu,Standardized and Normalized,0.9016,248,0.8889,70
+7,logistic,Original,0.8468,386,0.827,109
+7,logistic,Standardized,0.9004,251,0.8889,70
+7,logistic,Normalized,0.8468,386,0.827,109
+7,logistic,Standardized and Normalized,0.8754,314,0.8571,90
+7,tanh,Original,0.8456,389,0.8429,99
+7,tanh,Standardized,0.8833,294,0.8746,79
+7,tanh,Normalized,0.8444,392,0.827,109
+7,tanh,Standardized and Normalized,0.902,247,0.8889,70
+7,relu,Original,0.8468,386,0.827,109
+7,relu,Standardized,0.9091,229,0.8968,65
+7,relu,Normalized,0.8468,386,0.827,109
+7,relu,Standardized and Normalized,0.9008,250,0.8825,74

@@ -1,0 +1,13 @@
+,,,,Train,Train,Test,Test
+,,,,Score,Errors,Score,Errors
+Kernel,C,Gamma/Degree,Dataset Type,,,,
+Polynomial,10.0,4,Standardized and Normalized,0.9655,87,0.9476,33
+RBF,10.0,scale,Standardized and Normalized,0.9631,93,0.9413,37
+Polynomial,10.0,3,Standardized and Normalized,0.9627,94,0.9413,37
+RBF,10.0,auto,Standardized,0.9579,106,0.9381,39
+RBF,10.0,scale,Standardized,0.9579,106,0.9381,39
+Polynomial,10.0,4,Standardized,0.9512,123,0.9349,41
+Polynomial,10.0,3,Standardized,0.9532,118,0.9317,43
+Polynomial,10.0,2,Standardized and Normalized,0.9345,165,0.9286,45
+Polynomial,1.0,3,Standardized and Normalized,0.9377,157,0.9238,48
+Polynomial,1.0,4,Standardized and Normalized,0.9417,147,0.9238,48

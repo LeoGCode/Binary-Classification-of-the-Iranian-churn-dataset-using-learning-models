@@ -1,0 +1,6 @@
+,Train,Train,Test,Test
+,Score,Errors,Score,Errors
+Original,0.8476,384,0.8429,99
+Standardized,0.8159,464,0.8175,115
+Normalized,0.854,368,0.8429,99
+Standardized and Normalized,0.8671,335,0.8571,90

@@ -1,0 +1,13 @@
+,,,Train,Train,Test,Test
+,,,Score,Errors,Score,Errors
+Hidden Layer Sizes,Activation,Dataset Type,,,,
+7,relu,Standardized,0.9091,229,0.8968,65
+3,relu,Standardized,0.9032,244,0.8921,68
+5,relu,Standardized,0.9048,240,0.8905,69
+5,tanh,Standardized,0.9048,240,0.8905,69
+7,logistic,Standardized,0.9004,251,0.8889,70
+7,tanh,Standardized and Normalized,0.902,247,0.8889,70
+5,relu,Standardized and Normalized,0.9016,248,0.8889,70
+3,logistic,Standardized,0.9004,251,0.8857,72
+5,logistic,Standardized,0.8984,256,0.8841,73
+5,tanh,Standardized and Normalized,0.8944,266,0.8841,73

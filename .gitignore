@@ -1,0 +1,15 @@
+# vscode
+.vscode
+
+# python virtualenv
+.venv
+
+# latex auxiliary files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+
+images/
